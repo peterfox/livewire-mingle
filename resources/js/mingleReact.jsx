@@ -19,6 +19,12 @@ const createComponent = (mingleId, wireId, Component, options = {}) => {
 
     root.render(<Component wire={wire} wireId={wireId} mingleData={mingleData} />)
 
+    window.Livewire.hook('morph.updated', ({ component }) => {
+        if (component.id === wireId) {
+            root.render(<Component wire={wire} wireId={wireId} mingleData={JSON.parse(el.dataset.mingleData)} />)
+        }
+    })
+
     return {
         root,
         node: el,
